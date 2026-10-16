@@ -1,13 +1,13 @@
-// Licensed under the Dartastic Pro Software License Agreement.
+// Licensed under the MIT License.
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_appsflyer_suppression.dart';
 
 const _tracerName = 'dartastic_otel_libs_appsflyer';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AppsflyerResult {
   const AppsflyerResult({
@@ -110,104 +110,104 @@ Future<T> tracedAppsflyer<T>({
   final span = _tracer().startSpan(
     'appsflyer $operation',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(m),
+    attributes: OTelAPI.attributesFromMap(m),
   );
   try {
     final r = await invoke();
     if (r.result != null) {
       final extras = <Attribute<Object>>[];
       if (r.result!.appId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.app.id',
           r.result!.appId!,
         ));
       }
       if (r.result!.appsflyerUid != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.uid',
           r.result!.appsflyerUid!,
         ));
       }
       if (r.result!.customerUserId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.customer_user_id',
           r.result!.customerUserId!,
         ));
       }
       if (r.result!.installSource != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.install.source',
           r.result!.installSource!,
         ));
       }
       if (r.result!.mediaSource != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.media_source',
           r.result!.mediaSource!,
         ));
       }
       if (r.result!.campaign != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.campaign',
           r.result!.campaign!,
         ));
       }
       if (r.result!.adset != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.adset',
           r.result!.adset!,
         ));
       }
       if (r.result!.adId != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.ad.id',
           r.result!.adId!,
         ));
       }
       if (r.result!.isFirstLaunch != null) {
-        extras.add(OTel.attributeBool(
+        extras.add(OTelAPI.attributeBool(
           'appsflyer.is_first_launch',
           r.result!.isFirstLaunch!,
         ));
       }
       if (r.result!.eventName != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.event.name',
           r.result!.eventName!,
         ));
       }
       if (r.result!.eventStandard != null) {
-        extras.add(OTel.attributeBool(
+        extras.add(OTelAPI.attributeBool(
           'appsflyer.event.standard',
           r.result!.eventStandard!,
         ));
       }
       if (r.result!.eventRevenue != null) {
-        extras.add(OTel.attributeDouble(
+        extras.add(OTelAPI.attributeDouble(
           'appsflyer.event.revenue',
           r.result!.eventRevenue!,
         ));
       }
       if (r.result!.eventCurrency != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.event.currency',
           r.result!.eventCurrency!,
         ));
       }
       if (r.result!.skanConversionValue != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'appsflyer.skan.conversion_value',
           r.result!.skanConversionValue!,
         ));
       }
       if (r.result!.ddlEventName != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.ddl.event_name',
           r.result!.ddlEventName!,
         ));
       }
       if (r.result!.errorCode != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'appsflyer.error.code',
           r.result!.errorCode!,
         ));
@@ -217,13 +217,13 @@ Future<T> tracedAppsflyer<T>({
         );
       }
       if (r.result!.errorMessage != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'appsflyer.error.message',
           r.result!.errorMessage!,
         ));
       }
       if (r.result!.statusCode != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'http.response.status_code',
           r.result!.statusCode!,
         ));
@@ -234,13 +234,13 @@ Future<T> tracedAppsflyer<T>({
           );
         }
       }
-      if (extras.isNotEmpty) span.addAttributes(OTel.attributes(extras));
+      if (extras.isNotEmpty) span.addAttributes(OTelAPI.attributes(extras));
     }
     return r.value;
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
-        ErrorResource.errorType.key,
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
