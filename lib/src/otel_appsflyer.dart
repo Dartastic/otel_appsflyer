@@ -10,6 +10,7 @@ const _tracerName = 'dartastic_otel_libs_appsflyer';
 APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AppsflyerResult {
+  /// Creates a result.
   const AppsflyerResult({
     this.appId,
     this.appsflyerUid,
@@ -81,8 +82,13 @@ class AppsflyerResult {
   final int? statusCode;
 }
 
+/// What a traced call returned: the value for the caller plus fields
+/// recorded on the span.
 class AppsflyerCallResult<T> {
+  /// Creates a call result.
   const AppsflyerCallResult({required this.value, this.result});
+
+  /// The value returned to the caller.
   final T value;
   final AppsflyerResult? result;
 }
